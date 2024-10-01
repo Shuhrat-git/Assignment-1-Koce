@@ -1,0 +1,36 @@
+def main():
+    plate = input("Plate: ").strip()
+    if is_valid(plate):
+        print("Valid")
+    else:
+        print("Invalid")
+
+
+def is_valid(s):
+    # Check if length is between 2 and 6
+    if not (2 <= len(s) <= 6):
+        return False
+    
+    # Check if it starts with at least two letters
+    if not (s[0:2].isalpha()):
+        return False
+
+    # Check for valid characters and number rules
+    has_number = False  # Track if we encountered a number
+    for i, char in enumerate(s):
+        if char.isdigit():
+            if not has_number:  # First number we encounter
+                # Ensure the first number is not '0'
+                if char == '0':
+                    return False
+                has_number = True
+        elif has_number:  # If a letter appears after a number, it's invalid
+            return False
+        elif not char.isalnum():  # If character is not alphanumeric, invalid
+            return False
+    
+    return True
+
+
+if __name__ == "__main__":
+    main()
